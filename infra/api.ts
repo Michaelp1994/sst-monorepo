@@ -3,6 +3,9 @@ import { bucket, table } from "./storage";
 export const api = new sst.aws.ApiGatewayV2("Api", {
   transform: {
     route: {
+      args: {
+        auth: { iam: true },
+      },
       handler: {
         link: [table],
       },
