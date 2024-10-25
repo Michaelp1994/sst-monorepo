@@ -6,8 +6,10 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useState, useEffect } from "react";
 import { AppContext, AppContextType } from "./lib/contextLib";
 import { Auth } from "aws-amplify";
+import { useNavigate } from "react-router-dom";
 
 function App() {
+  const nav = useNavigate();
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
 
@@ -32,6 +34,7 @@ function App() {
     await Auth.signOut();
 
     userHasAuthenticated(false);
+    nav("/login");
   }
   return (
     !isAuthenticating && (
