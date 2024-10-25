@@ -5,6 +5,8 @@ import { onError } from "../lib/errorLib";
 import LoaderButton from "../components/LoaderButton";
 import { Form, Stack } from "react-bootstrap";
 import type { NoteType } from "../types/note";
+import { s3Upload } from "../lib/awsLib";
+import config from "../config";
 
 export default function Notes() {
   const file = useRef<null | File>(null);
@@ -52,6 +54,12 @@ export default function Notes() {
     file.current = event.currentTarget.files[0];
   }
 
+  function saveNote(note: NoteType) {
+    return API.put("notes", `/notes/${id}`, {
+      body: note,
+    });
+  }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     let attachment;
 
@@ -67,9 +75,30 @@ export default function Notes() {
     }
 
     setIsLoading(true);
+
+    try {
+      if (file.current) {
+        attachment = await s3Upload(file.current);
+      } else if (note && note.attachment) {
+        attachment = note.attachment;
+      }
+
+      await saveNote({
+        content: content,
+        attachment: attachment,
+      });
+      nav("/");
+    } catch (e) {
+      onError(e);
+      setIsLoading(false);
+    }
   }
 
-  async function handleDelete(event: React.FormEvent<HTMLFormElement>) {
+  function deleteNote() {
+    return API.del("notes", `/notes/${id}`, {});
+  }
+
+  async function handleDelete(event: React.FormEvent<HTMLModElement>) {
     event.preventDefault();
 
     const confirmed = window.confirm(
@@ -81,6 +110,14 @@ export default function Notes() {
     }
 
     setIsDeleting(true);
+
+    try {
+      await deleteNote();
+      nav("/");
+    } catch (e) {
+      onError(e);
+      setIsDeleting(false);
+    }
   }
 
   return (
