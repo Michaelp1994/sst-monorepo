@@ -5,7 +5,7 @@
     "@aws-sdk/client-dynamodb": "^3.679.0",
     "@aws-sdk/lib-dynamodb": "^3.679.0",
     "@monorepo-template/core": "workspace:*",
-    "sst": "*",
+    "sst": "^3.2.61",
     "stripe": "^17.2.1",
     "uuid": "^10.0.0"
   },
