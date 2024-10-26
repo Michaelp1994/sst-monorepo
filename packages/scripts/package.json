@@ -6,10 +6,10 @@
   },
   "dependencies": {
     "@monorepo-template/core": "workspace:*",
-    "sst": "*"
+    "sst": "^3.2.61"
   },
   "devDependencies": {
-    "@types/node": "^20.14.11",
-    "tsx": "^4.7.2"
+    "@types/node": "^20.17.1",
+    "tsx": "^4.19.1"
   }
 }

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {},
   "dependencies": {
-    "sst": "^3"
+    "sst": "^3.2.61"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
