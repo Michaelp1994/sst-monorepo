@@ -15,6 +15,7 @@ export default $config({
     const web = await import("./infra/web");
     return {
       UserPool: auth.userPool.id,
+      webUrl: web.frontend.url,
       Region: aws.getRegionOutput().name,
       IdentityPool: auth.identityPool.id,
       UserPoolClient: auth.userPoolClient.id,
